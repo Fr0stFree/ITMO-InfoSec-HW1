@@ -5,7 +5,7 @@ services:
     container_name: gitlab
     image: gitlab/gitlab-ce:latest
     restart: unless-stopped
-    hostname: 'localhost'
+    hostname: 'gitlab'
     ports:
       - '80:80'
       - '443:443'
@@ -18,7 +18,7 @@ services:
       - gitlab-network
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://localhost'
+        external_url 'http://gitlab'
         nginx['listen_address'] = '0.0.0.0'
         gitlab_rails['time_zone'] = 'UTC'
         gitlab_rails['gitlab_default_can_create_group'] = true
@@ -35,7 +35,9 @@ services:
     depends_on:
       - gitlab
     networks:
-      - gitlab-network
+      gitlab-network:
+        aliases:
+          - gitlab
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - '$GITLAB_HOME/gitlab-runner/config:/etc/gitlab-runner'
