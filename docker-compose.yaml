@@ -35,9 +35,7 @@ services:
     depends_on:
       - gitlab
     networks:
-      gitlab-network:
-        aliases:
-          - gitlab
+      - gitlab-network
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - '$GITLAB_HOME/gitlab-runner/config:/etc/gitlab-runner'
